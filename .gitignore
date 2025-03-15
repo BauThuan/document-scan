@@ -1,7 +1,5 @@
 echo "__pycache__/
 .ipynb_checkpoints/
-*.csv
-*.xlsx
 *.zip
 *.txt
 output/
