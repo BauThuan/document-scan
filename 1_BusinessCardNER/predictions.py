@@ -10,7 +10,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 ### Load NER model
-model_ner = spacy.load('./outputClean/model-best/')
+model_ner = spacy.load('./output/model-best/')
 
 
 def cleanText(txt):
@@ -80,7 +80,9 @@ grp_gen = groupgen()
 
 def getPredictions(image):
     # extract data using Pytesseract 
-    tessData = pytesseract.image_to_data(image, lang='vie')
+    img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # lang='vie'
+    tessData = pytesseract.image_to_data(img_gray, lang='vie')
     # convert into dataframe
     tessList = list(map(lambda x:x.split('\t'), tessData.split('\n')))
     df = pd.DataFrame(tessList[1:],columns=tessList[0])
@@ -90,7 +92,6 @@ def getPredictions(image):
     # convet data into content
     df_clean = df.query('text != "" ')
     content = " ".join([w for w in df_clean['text']])
-    print(content)
     # get prediction from NER model
     doc = model_ner(content)
 
