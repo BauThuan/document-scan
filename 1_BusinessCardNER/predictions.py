@@ -19,7 +19,7 @@ def cleanText(txt):
     tableWhitespace = str.maketrans('','',whitespace)
     tablePunctuation = str.maketrans('','',punctuation)
     text = str(txt)
-    #text = text.lower()
+    text = text.lower()
     removewhitespace = text.translate(tableWhitespace)
     removepunctuation = removewhitespace.translate(tablePunctuation)
     
@@ -80,9 +80,9 @@ grp_gen = groupgen()
 
 def getPredictions(image):
     # extract data using Pytesseract 
-    img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     # lang='vie'
-    tessData = pytesseract.image_to_data(img_gray, lang='vie')
+    tessData = pytesseract.image_to_data(image, lang='vie')
     # convert into dataframe
     tessList = list(map(lambda x:x.split('\t'), tessData.split('\n')))
     df = pd.DataFrame(tessList[1:],columns=tessList[0])
