@@ -38,40 +38,28 @@ class groupgen():
             self.id +=1
             self.text = text
             return self.id
-        
 
-
-def parser(text,label):
+def parser(text, label):
     if label == 'PHONE':
         text = text.lower()
-        text = re.sub(r'\D','',text)
-        
+        text = re.sub(r'\D', '', text)
+
     elif label == 'EMAIL':
         text = text.lower()
         allow_special_char = '@_.\-'
-        text = re.sub(r'[^A-Za-z0-9{} ]'.format(allow_special_char),'',text)
-        
+        text = re.sub(r'[^A-Za-z0-9{} ]'.format(allow_special_char), '', text)
+
     elif label == 'WEB':
         text = text.lower()
         allow_special_char = ':/.%#\-'
-        text = re.sub(r'[^A-Za-z0-9{} ]'.format(allow_special_char),'',text)
-        
-    elif label in ('NAME', 'DES'):
-        text = text.lower()
-        text = re.sub(r'[^a-z ]','',text)
-        text = text.title()
-        
-    elif label == 'ORG':
-        text = text.lower()
-        text = re.sub(r'[^a-z0-9 ]','',text)
-        text = text.title()
-        
-    elif label == 'ADDRESS':
-        text = text.lower()
-        allow_special_char = ',.-/' 
         text = re.sub(r'[^A-Za-z0-9{} ]'.format(allow_special_char), '', text)
+
+    elif label in ('NAME', 'DES', 'ORG', 'ADDRESS'):
+        text = text.lower()
+        # Giữ nguyên các ký tự tiếng Việt
+        text = re.sub(r'[^A-Za-zÀ-Ỹà-ỹ0-9\s\-/,]', '', text)
         text = text.title()
-        
+
     return text
 
 
